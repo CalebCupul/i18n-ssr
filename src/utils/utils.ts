@@ -1,23 +1,31 @@
 import { hotels, languages, defaultLang } from "../consts";
-
-export function determineLanguageFromUrl(url: URL) {
-  const hotel = getHotelFromUrl(url);
-  return hotels.includes(hotel) ? hotel : false;
-}
+import { setLanguage } from "../i18n/utils";
 
 export function determineHotelFromUrl(url: URL) {
-  const lang = getLangFromUrl(url);
-  return languages.includes(lang) ? lang : defaultLang;
+  const hotelFromUrl = getHotelFromUrl(url);
+  const hotelFound = hotels.some(hotel => hotel.url === hotelFromUrl);
+  return hotelFound ? hotelFromUrl : false;
 }
 
-const getHotelFromUrl = (url: URL) =>
+export function determineLanguageFromUrl(url: URL) {
+  const lang = getLangFromUrl(url);
+  return languages.includes(lang) ? lang : false;
+}
+
+const getHotelFromUrl = (url: URL): string =>
   url.pathname.split("/").filter(Boolean)[1];
 
-function getLangFromUrl(url: URL) {
+function getLangFromUrl(url: URL): string {
   const [, lang] = url.pathname.split("/");
   return lang;
 }
 
-export const hotelExists = (hotel: string = ""): string | false => hotels.includes(hotel) ? hotel : false;
-export const langExists = (lang: string = ""): string | false => languages.includes(lang) ? lang : defaultLang;
-
+export function redirectToNotFoundPage(language: string | false): Response {
+  const lang = setLanguage(language || ''); // If language is false, set it to empty string to use default language
+  return new Response(null, {
+    status: 302, // Consider using 302 for temporary and 301 for permanent redirects
+    headers: {
+      'Location': `/${lang}/404`,
+    },
+  });
+}
