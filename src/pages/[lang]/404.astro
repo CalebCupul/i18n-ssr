@@ -8,7 +8,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { useTranslations, setLanguage } from "../../i18n/utils";
 import { defaultLang } from "../../consts";
-const lang = setLanguage(Astro.locals.lang);
+const lang = setLanguage(Astro.locals.language);
 const t = useTranslations(lang);
 console.log('inside')
 ---

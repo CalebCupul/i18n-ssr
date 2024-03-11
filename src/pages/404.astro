@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro"
 import { useTranslations } from "../i18n/utils"
 import { setLanguage } from "../i18n/utils";
 
-const lang = setLanguage(Astro.locals.lang)
+const lang = setLanguage(Astro.locals.language)
 const hotel = Astro.locals.hotel
 const t = useTranslations(lang);
 ---
