@@ -7,12 +7,15 @@ import {
 export function onRequest({ locals, request }, next) {
   const url = new URL(request.url);
   const isRequestFromNotFoundPage = url.pathname.endsWith("/404");
-  locals.lang = determineLanguageFromUrl(url);
+  
+  locals.language = determineLanguageFromUrl(url);
   locals.hotel = determineHotelFromUrl(url);
 
-  if ((!locals.hotel || !locals.lang) && !isRequestFromNotFoundPage) {
-    return redirectToNotFoundPage(locals.lang);
+  // Check specifically for null to determine if the language was invalid.
+  if ((!locals.hotel || locals.language === null) && !isRequestFromNotFoundPage) {
+    return redirectToNotFoundPage(locals.language);
   }
 
   return next();
 }
+

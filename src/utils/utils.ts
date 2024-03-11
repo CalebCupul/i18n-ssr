@@ -7,9 +7,9 @@ export function determineHotelFromUrl(url: URL) {
   return hotelFound ? hotelFromUrl : false;
 }
 
-export function determineLanguageFromUrl(url: URL) {
+export function determineLanguageFromUrl(url: URL): string | null {
   const lang = getLangFromUrl(url);
-  return languages.includes(lang) ? lang : false;
+  return languages.includes(lang) ? lang : null;
 }
 
 const getHotelFromUrl = (url: URL): string =>
@@ -20,12 +20,14 @@ function getLangFromUrl(url: URL): string {
   return lang;
 }
 
-export function redirectToNotFoundPage(language: string | false): Response {
-  const lang = setLanguage(language || ''); // If language is false, set it to empty string to use default language
+export function redirectToNotFoundPage(language: string | null): Response {
+  // Direct handling of null to make decisions based on the presence of a valid language
+  const lang = language === null ? defaultLang : language;
   return new Response(null, {
-    status: 302, // Consider using 302 for temporary and 301 for permanent redirects
+    status: 302,
     headers: {
       'Location': `/${lang}/404`,
     },
   });
 }
+
