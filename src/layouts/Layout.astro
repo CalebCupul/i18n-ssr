@@ -2,10 +2,10 @@
 interface Props {
   title: string;
 }
-
+import { setLanguage } from '../i18n/utils';
 const { title } = Astro.props;
+const lang = setLanguage(Astro.locals.lang);
 
-const lang = 'en'
 ---
 
 <!doctype html>
