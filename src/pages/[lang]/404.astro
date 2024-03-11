@@ -1,0 +1,19 @@
+---
+// This 404 works as a fallback for the whole site for cases like:
+// /es/thisHotelDoesNotExist will fallback to -> /es/404
+// /kr/existingHotel -> will fallback to -> /defaultLanguage/404
+// /kr/thisHotelDoesNotExist will fallback to -> /defaultLanguage/404
+// /ca/villaDoesntExist -> will fallback to -> /defaultLanguage/404
+
+import Layout from '../../layouts/Layout.astro';
+import { useTranslations, setLanguage } from "../../i18n/utils";
+import { defaultLang } from "../../consts";
+const lang = setLanguage(Astro.locals.lang);
+const t = useTranslations(lang);
+console.log('inside')
+---
+<Layout  title={t('notFound.title')}>
+    <h1><u>inner 404</u></h1>
+    <h1>/{lang} 404 HANDLER</h1>
+</Layout>
+

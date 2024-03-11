@@ -1,7 +1,14 @@
 ---
-// console.log('inside 404')
-// console.log(Astro.locals.lang);
+import Layout from "../layouts/Layout.astro"
+import { useTranslations } from "../i18n/utils"
+import { setLanguage } from "../i18n/utils";
 
+const lang = setLanguage(Astro.locals.lang)
+const hotel = Astro.locals.hotel
+const t = useTranslations(lang);
 ---
+<Layout title={t('notFound.title')}>
+    <h1>{hotel}</h1>
+    <h2>{t('notFound.title')}</h2>
+</Layout>
 
-<h1>404 outer</h1>
