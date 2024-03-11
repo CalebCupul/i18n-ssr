@@ -1,22 +1,14 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import { hotelExists, langExists } from "../../../utils/utils";
-import { defaultLang } from "../../../consts";
+import { useTranslations } from "../../../i18n/utils";
 
+const hotel = Astro.locals.hotel;
+const lang = Astro.locals.lang;
 
-const { lang, hotel } = Astro.params;
-
-console.log(hotelExists(hotel));
-
-// if (!langExists(lang)) { Astro.redirect(`/${defaultLang}/404`); }
-if (!hotelExists(hotel) && hotel != "404") { return Astro.redirect(`/${lang}/404`); }
-
-console.log(lang + " " + hotel);
-
-// const t = useTranslations(lang);
+const t = useTranslations(lang);
 ---
 <p>index</p>
-<!-- <Layout title={hotel}>
-  <h1>{t("home.hotel")}</h1>
-  <h1>{t("home.lang")}</h1>
-</Layout> -->
+<Layout title={hotel}>
+  <h1>{hotel}</h1>
+  <h1>{t("home.title")}</h1>
+</Layout>
